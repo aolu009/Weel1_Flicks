@@ -9,7 +9,7 @@
 import UIKit
 import MBProgressHUD
 
-class movieDetailViewController: UIViewController {
+class topMovieDetailViewController: UIViewController {
     
     @IBOutlet weak var movieDetail: UIView!
     
@@ -38,9 +38,9 @@ class movieDetailViewController: UIViewController {
         
         self.movieTitleLabel.text = movieTitle
         self.ratingLabel.text = String(describing: rating!) + "/10"
-        self.releaseDateLabel.text = "Release Date: " + releaseDate!
+        self.releaseDateLabel.text = releaseDate
         self.movieOverviewLabel.text = movieOverview
-            
+        
         self.movieDetail.frame.size.height = 0
         self.movieDetail.frame.size.width = 0
         self.movieTitleLabel.frame.size.height = 0
@@ -56,11 +56,11 @@ class movieDetailViewController: UIViewController {
             self.movieDetail.frame.size.height = 323
             self.movieDetail.frame.size.width = 375
             self.movieTitleLabel.frame.size.height = 21
-            self.movieTitleLabel.sizeToFit()
+            self.movieTitleLabel.frame.size.width = 223
             self.ratingLabel.frame.size.height = 21
             self.ratingLabel.frame.size.width = 69
             self.releaseDateLabel.frame.size.height = 21
-            self.releaseDateLabel.sizeToFit()
+            self.releaseDateLabel.frame.size.width = 116
             self.movieOverviewLabel.frame.size.height = 223
             self.movieOverviewLabel.frame.size.width = 332
         })
@@ -70,5 +70,5 @@ class movieDetailViewController: UIViewController {
         // Hide HUD once the network request comes back (must be done on main UI thread)
         MBProgressHUD.hide(for: self.view, animated: true)
     }
-
+    
 }
