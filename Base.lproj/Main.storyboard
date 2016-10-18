@@ -174,7 +174,7 @@
         <scene sceneID="JYJ-Nl-vZg">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="D5g-2x-3fS" userLabel="Now Playing" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Now Playing" id="7X2-7N-uRK">
+                    <tabBarItem key="tabBarItem" title="Now Playing" image="Image" id="7X2-7N-uRK">
                         <offsetWrapper key="titlePositionAdjustment" horizontal="5" vertical="0.0"/>
                     </tabBarItem>
                     <toolbarItems/>
@@ -292,6 +292,9 @@
             <point key="canvasLocation" x="497" y="810"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="Image" width="28" height="25"/>
+    </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>
