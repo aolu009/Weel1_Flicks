@@ -28,12 +28,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UINavigationControllerDele
         let vc2 = storyboard.instantiateViewController(withIdentifier: "FlicksNavController") as! UINavigationController
         vc2.delegate = self
         vc2.tabBarItem.title = "Top Rated"
-        vc2.tabBarItem.image = UIImage(named: "star")
+        vc2.tabBarItem = UITabBarItem.init(tabBarSystemItem: UITabBarSystemItem.topRated, tag: 0)
         
         let fvc2 = vc2.topViewController as! MoviesViewController
         fvc2.flicksToDisplay = false
         // Set up the second FlicksVC to display "top rated" movies
-        //fvc2.flicksToDisplay = FlicksViewController.FlicksType.FlicksTopRated
         
         // Set up the Tab Bar Controller to have two tabs
         let tabBarController = UITabBarController()
