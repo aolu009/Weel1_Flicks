@@ -173,7 +173,7 @@
         <!--Now Playing-->
         <scene sceneID="JYJ-Nl-vZg">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="D5g-2x-3fS" userLabel="Now Playing" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="FlicksNavController" automaticallyAdjustsScrollViewInsets="NO" id="D5g-2x-3fS" userLabel="Now Playing" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Now Playing" image="Image" id="7X2-7N-uRK">
                         <offsetWrapper key="titlePositionAdjustment" horizontal="5" vertical="0.0"/>
                     </tabBarItem>
@@ -227,7 +227,7 @@
                                         <rect key="frame" x="0.0" y="92" width="375" height="157"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="U90-Ef-i9v" id="LIs-hf-Kto">
-                                            <frame key="frameInset" width="342" height="156.5"/>
+                                            <frame key="frameInset" width="342" height="156"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="URQ-CY-IcR">

@@ -20,8 +20,7 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
     var movieTitle : String?
     var releaseDate : String?
     var rating : String?
-    
-    //var outOfTen : String? = "/10"
+    var flicksToDisplay : Bool = true
     override func viewDidLoad() {
         super.viewDidLoad()
         networkError.isHidden = true
@@ -33,7 +32,15 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
         //Fire initial Request
         let apiKey = "a07e22bc18f5cb106bfe4cc1f83ad8ed"
         _ = URL(string:"https://api.themoviedb.org/3/movie/top_rated?language=en-US&api_key=\(apiKey)")
-        let url = URL(string:"https://api.themoviedb.org/3/movie/now_playing?language=en-US&api_key=\(apiKey)")
+        var url = URL(string:"https://api.themoviedb.org/3/movie/now_playing?language=en-US&api_key=\(apiKey)")
+        if flicksToDisplay {
+            url = URL(string:"https://api.themoviedb.org/3/movie/now_playing?language=en-US&api_key=\(apiKey)")
+        }
+        else {
+            
+            url = URL(string:"https://api.themoviedb.org/3/movie/top_rated?language=en-US&api_key=\(apiKey)")
+        }
+        
         let request = URLRequest(url: url!)
         let session = URLSession(
             configuration: URLSessionConfiguration.default,
