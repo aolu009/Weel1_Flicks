@@ -10,19 +10,25 @@ import UIKit
 import AFNetworking
 import MBProgressHUD
 
-class MoviesViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class MoviesViewController: UIViewController, UITableViewDataSource, UITableViewDelegate,UISearchBarDelegate {
     
     @IBOutlet weak var networkError: UIView!
     @IBOutlet weak var networkErrorLabel: UILabel!
     @IBOutlet weak var movieTable: UITableView!
+    
+    @IBOutlet weak var searchTextField: UISearchBar!
     
     var movieArray : Array? = [NSDictionary]()
     var movieTitle : String?
     var releaseDate : String?
     var rating : String?
     var flicksToDisplay : Bool = true
+    var searchActive : Bool = false
+    var filtered:Array? = [NSDictionary]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        searchTextField.delegate = self
         networkError.isHidden = true
         let refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: #selector(refreshControlAction(refreshControl:)), for: UIControlEvents.valueChanged)
@@ -82,13 +88,18 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
     // Setup table view detail via protocal
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
+        if(searchActive) {
+            return filtered!.count
+        }
+        return (self.movieArray?.count)!
+        /*
         if let movie = self.movieArray{
             return movie.count
         }
         else {
             return 0
         }
-        
+        */
         
     }
     
@@ -100,31 +111,72 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
         var posterImageComplete : String?
         cell.accessoryType = UITableViewCellAccessoryType(rawValue: 0)!
         
-        //Extracting data layer by layer
-        let movie = self.movieArray?[indexPath.row]
-        cell.titleText.text = movie?["title"] as? String
-        cell.descriptionText.text = movie?["overview"] as? String
-        
-        //cell.descriptionText.sizeToFit() //Still not fitting the space
-        if let imageIdUrl = movie?["poster_path"] as? String{
-            posterImageComplete = posterUrl + imageIdUrl
-            print("imageUrl:",posterImageComplete)
-            cell.moviePost.setImageWith(URL(string:posterImageComplete!)!)
+        //Extracting data layer by layer filtered
+        if(searchActive){
+            let movie = self.filtered?[indexPath.row]
+            cell.titleText.text = movie?["title"] as? String
+            cell.descriptionText.text = movie?["overview"] as? String
+            
+            //cell.descriptionText.sizeToFit() //Still not fitting the space
+            if let imageIdUrl = movie?["poster_path"] as? String{
+                posterImageComplete = posterUrl + imageIdUrl
+                print("imageUrl:",posterImageComplete)
+                cell.moviePost.setImageWith(URL(string:posterImageComplete!)!)
+            }
         }
-        /*
         else{
-            //Testing code
+            let movie = self.movieArray?[indexPath.row]
+            cell.titleText.text = movie?["title"] as? String
+            cell.descriptionText.text = movie?["overview"] as? String
+        
+            //cell.descriptionText.sizeToFit() //Still not fitting the space
+            if let imageIdUrl = movie?["poster_path"] as? String{
+                posterImageComplete = posterUrl + imageIdUrl
+                print("imageUrl:",posterImageComplete)
+                cell.moviePost.setImageWith(URL(string:posterImageComplete!)!)
+            }
         }
-        */
-
-        
-        
         return cell
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated:true)
         
     }
+    
+    // Implement Search Bar function
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        searchActive = true;
+    }
+    
+    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+        searchActive = false;
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        searchActive = false;
+    }
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchActive = false;
+    }
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        
+        filtered = (self.movieArray?.filter({ (dictionary: NSDictionary? ) -> Bool in
+            let tmp: NSString = dictionary!["title"] as! NSString
+            let range = tmp.range(of: searchText, options: NSString.CompareOptions.caseInsensitive)
+            return range.location != NSNotFound
+        }))!
+        if(filtered?.count == 0){
+            searchActive = false
+        } else {
+            searchActive = true
+        }
+        self.movieTable.reloadData()
+    }
+    
+    
+    
     
     func refreshControlAction(refreshControl: UIRefreshControl) {
         
