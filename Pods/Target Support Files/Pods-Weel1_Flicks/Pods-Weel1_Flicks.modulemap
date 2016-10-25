@@ -1,0 +1,6 @@
+framework module Pods_Weel1_Flicks {
+  umbrella header "Pods-Weel1_Flicks-umbrella.h"
+
+  export *
+  module * { export * }
+}
